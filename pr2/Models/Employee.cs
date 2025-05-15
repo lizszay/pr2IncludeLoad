@@ -10,7 +10,7 @@ public partial class Employee
 
     public int IdPosition { get; set; }
 
-    public virtual Department IdDepartmentNavigation { get; set; } = null!;
+    public virtual Department Department { get; set; } = null!;
 
-    public virtual Position IdPositionNavigation { get; set; } = null!;
+    public virtual Position Position { get; set; } = null!;
 }

@@ -21,12 +21,13 @@ namespace ConsoleApp
             }
         }
 
+        //связанные данные (отдел и должность) загружаются сразу вместе с сотрудниками одним запросом.
         static void LoadWithInclude(DbCompanyContext context)
         {
             // Загружаем сотрудников в список employees
             List<Employee> employees = context.Employees
-                .Include(employee => employee.IdDepartmentNavigation) //загружаем для каждого сотрудника отедл
-                .Include(employee => employee.IdPositionNavigation) //загружаем для каждого сотрудника должность
+                .Include(employee => employee.Department) //загружаем для каждого сотрудника отедл
+                .Include(employee => employee.Position) //загружаем для каждого сотрудника должность
                 .ToList(); //получаем список сотрудников и их связй
 
             //проходимся по каждому сотруднику
@@ -34,8 +35,8 @@ namespace ConsoleApp
             {
                 //получаем имя, отдел, должность
                 string employeeName = employee.Name;
-                string departmentName = employee.IdDepartmentNavigation.Name;
-                string positionName = employee.IdPositionNavigation.Name;
+                string departmentName = employee.Department.Name;
+                string positionName = employee.Position.Name;
 
                 Console.WriteLine($"Работник: {employeeName}");
                 Console.WriteLine($"  Отдел: {departmentName}");
@@ -44,6 +45,7 @@ namespace ConsoleApp
             }
         }
 
+        //сначала загружаются все сотрудники, а затем отдельно загружаются все отделы и должности
         static void LoadWithLoad(DbCompanyContext context)
         {
             // Загружаем всех сотрудников в список employees из бд
@@ -57,8 +59,8 @@ namespace ConsoleApp
             {
                 // Свойства навигации доступны благодаря загрузке
                 string employeeName = employee.Name;
-                string departmentName = employee.IdDepartmentNavigation.Name;
-                string positionName = employee.IdPositionNavigation.Name;
+                string departmentName = employee.Department.Name;
+                string positionName = employee.Position.Name;
 
                 Console.WriteLine($"Работник: {employeeName}");
                 Console.WriteLine($"  Отдел: {departmentName}");

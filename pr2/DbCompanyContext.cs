@@ -47,12 +47,12 @@ public partial class DbCompanyContext : DbContext
             entity.Property(e => e.IdPosition).HasColumnName("id_position");
             entity.Property(e => e.Name).HasColumnName("name");
 
-            entity.HasOne(d => d.IdDepartmentNavigation).WithMany(p => p.Employees)
+            entity.HasOne(d => d.Department).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.IdDepartment)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_employess_departments");
 
-            entity.HasOne(d => d.IdPositionNavigation).WithMany(p => p.Employees)
+            entity.HasOne(d => d.Position).WithMany(p => p.Employees)
                 .HasForeignKey(d => d.IdPosition)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_employess_positions");
